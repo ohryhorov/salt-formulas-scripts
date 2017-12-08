@@ -292,6 +292,7 @@ EOF
 	  - reclass: *reclass
 	master_tops:
 	  reclass: *reclass
+	order_masters: True
 EOF
 
   echo "Configuring reclass ..."
