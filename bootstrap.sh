@@ -326,7 +326,7 @@ EOF
   if [[ $SYNDIC_ENABLED =~ ^(True|true|1|yes)$ ]]; then
   cat <<-EOF > ${CONFIG}
 	classes:
-        - system.salt.syndic.single
+	- system.salt.syndic.single
 	- cluster.${CLUSTER_NAME}.infra.config
 	- service.salt.master.syndic
 	parameters:
