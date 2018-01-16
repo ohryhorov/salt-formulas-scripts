@@ -326,7 +326,7 @@ EOF
   cat <<-EOF > ${CONFIG}
 	classes:
 	- cluster.${CLUSTER_NAME}.infra.config
-	- system.salt.master.syndic
+	- service.salt.master.syndic
 	parameters:
 	  _param:
 	    salt_master_host: ${MASTER_IP:-$MASTER_HOSTNAME}
