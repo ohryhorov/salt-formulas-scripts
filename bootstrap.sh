@@ -323,6 +323,30 @@ EOF
   if [[ $SALT_MASTER_BOOTSTRAP_MINIMIZED =~ ^(True|true|1|yes)$ || ! -f "${CONFIG}" ]]; then
   log_warn "Salt Master node specification has not been found in model."
   log_warn "Creating temporary cfg01 configuration for bootstrap: ${CONFIG}"
+  if [ $SYNDIC_ENABLED =~ ^(True|true|1|yes)$ ]; then
+  cat <<-EOF > ${CONFIG}
+	classes:
+        - system.salt.syndic.single
+	- cluster.${CLUSTER_NAME}.infra.config
+	- service.salt.master.syndic
+	parameters:
+	  _param:
+	    salt_master_host: ${MASTER_IP:-$MASTER_HOSTNAME}
+	    salt_master_base_environment: $SALT_ENV
+	    salt_formula_branch: ${SALT_FORMULAS_BRANCH:-master}
+	    reclass_data_revision: ${RECLASS_REVISION:-$RECLASS_BRANCH}
+	    reclass_data_repository: "$RECLASS_ADDRESS"
+	    reclass_config_master: ${MASTER_IP:-$MASTER_HOSTNAME}
+	    linux_system_codename: ${DISTRIB_CODENAME}
+	    cluster_name: ${CLUSTER_NAME}
+	    cluster_domain: ${DOMAIN:-$CLUSTER_NAME.local}
+	  linux:
+	    system:
+	      name: ${HOSTNAME:-cfg01}
+	      domain: ${DOMAIN:-$CLUSTER_NAME.local}
+	# ########
+EOF
+  else
   cat <<-EOF > ${CONFIG}
 	classes:
 	- cluster.${CLUSTER_NAME}.infra.config
@@ -344,6 +368,8 @@ EOF
 	      domain: ${DOMAIN:-$CLUSTER_NAME.local}
 	# ########
 EOF
+
+  fi
 
     if [ "$SALT_VERSION" == "latest" ]; then
       VERSION=""
