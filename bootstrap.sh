@@ -323,7 +323,7 @@ EOF
   if [[ $SALT_MASTER_BOOTSTRAP_MINIMIZED =~ ^(True|true|1|yes)$ || ! -f "${CONFIG}" ]]; then
   log_warn "Salt Master node specification has not been found in model."
   log_warn "Creating temporary cfg01 configuration for bootstrap: ${CONFIG}"
-  if [ $SYNDIC_ENABLED =~ ^(True|true|1|yes)$ ]; then
+  if [[ $SYNDIC_ENABLED =~ ^(True|true|1|yes)$ ]]; then
   cat <<-EOF > ${CONFIG}
 	classes:
         - system.salt.syndic.single
