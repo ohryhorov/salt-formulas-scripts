@@ -368,7 +368,7 @@ EOF
 	      domain: ${DOMAIN:-$CLUSTER_NAME.local}
 	# ########
 EOF
-
+  ln -s ${CONFIG} ${RECLASS_ROOT}/nodes/_generated/${HOSTNAME}_master.yml 
   fi
 
     if [ "$SALT_VERSION" == "latest" ]; then
